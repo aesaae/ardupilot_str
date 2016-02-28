@@ -372,8 +372,8 @@ void Plane::Log_Write_Sonar()
 
 struct PACKED log_Strain_Data {
     LOG_PACKET_HEADER;
-    uint64_t PX4t_ms;
-	uint64_t PIC32t_ms;
+    uint64_t PX4t_us;
+	uint64_t PIC32t_us;
     float Str_LW06;
     float Str_LW05;
     float Str_LW04;
@@ -395,8 +395,8 @@ void Plane::Log_Write_Strain_Data()
 {
     struct log_Strain_Data pkt = {
         LOG_PACKET_HEADER_INIT(LOG_STRAIN_DATA_MSG),
-        PX4t_ms     : AP_HAL::micros64(),
-        PIC32t_ms   : AP_HAL::micros64(),
+        PX4t_us     : AP_HAL::micros64(),
+        PIC32t_us   : AP_HAL::micros64(),
         Str_LW06    : rangefinder.voltage_mv()*0.001f,
 		Str_LW05    : rangefinder.voltage_mv()*0.001f,
 		Str_LW04    : rangefinder.voltage_mv()*0.001f,

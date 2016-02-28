@@ -729,6 +729,26 @@ private:
     int32_t last_mixer_crc = -1;
 #endif // CONFIG_HAL_BOARD
     
+    // Custom global variables definition
+    struct {
+        uint64_t PX4t_us;
+    	uint64_t PIC32t_us;
+        float Str_LW06;
+        float Str_LW05;
+        float Str_LW04;
+    	float Str_LW03;
+        float Str_LW02;
+    	float Str_LW01;
+        float Str_RW01;
+    	float Str_RW02;
+    	float Str_RW03;
+    	float Str_RW04;
+    	float Str_RW05;
+    	float Str_RW06;
+    	float Tmp_LW06;
+    	float Tmp_RW06;
+    }strain_data;
+
     void demo_servos(uint8_t i);
     void adjust_nav_pitch_throttle(void);
     void update_load_factor(void);

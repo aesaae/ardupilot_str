@@ -20,7 +20,7 @@ struct LogStructure {
     //const char name[5];
 	const char name[10];
     //const char format[16];
-	const char format[20];
+	const char format[24];
     const char labels[64];
 };
 
