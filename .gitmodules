@@ -22,3 +22,6 @@
 [submodule "modules/benchmark"]
 	path = modules/benchmark
 	url = https://github.com/google/benchmark.git
+[submodule "modules/googletest"]
+	path = modules/googletest
+	url = https://github.com/diydrones/googletest.git
