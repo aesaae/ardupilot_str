@@ -19,3 +19,6 @@
 [submodule "gtest"]
 	path = modules/gtest
 	url = git://github.com/diydrones/googletest
+[submodule "modules/benchmark"]
+	path = modules/benchmark
+	url = https://github.com/google/benchmark.git
