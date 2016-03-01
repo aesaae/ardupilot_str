@@ -49,6 +49,8 @@ bool Plane::print_log_menu(void)
         PLOG(CAMERA);
         PLOG(RC);
         PLOG(SONAR);
+        // Custom code
+        PLOG(STRAIN_DATA);
  #undef PLOG
     }
 
