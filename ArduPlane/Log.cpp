@@ -130,6 +130,8 @@ int8_t Plane::select_logs(uint8_t argc, const Menu::arg *argv)
         TARG(CAMERA);
         TARG(RC);
         TARG(SONAR);
+        // Custom code
+        TARG(STRAIN_DATA);
  #undef TARG
     }
 
@@ -374,8 +376,8 @@ void Plane::Log_Write_Sonar()
 
 struct PACKED log_Strain_Data {
     LOG_PACKET_HEADER;
-    uint64_t PX4t_us;
-	uint64_t PIC32t_us;
+    uint32_t PX4t_ms;
+	uint32_t PIC32t_ms;
     float Str_LW06;
     float Str_LW05;
     float Str_LW04;
@@ -397,8 +399,8 @@ void Plane::Log_Write_Strain_Data()
 {
     struct log_Strain_Data pkt = {
         LOG_PACKET_HEADER_INIT(LOG_STRAIN_DATA_MSG),
-        PX4t_us     : AP_HAL::micros64(),
-        PIC32t_us   : AP_HAL::micros64(),
+        PX4t_ms     : (uint32_t) AP_HAL::micros64()*1000,
+        PIC32t_ms   : (uint32_t) AP_HAL::micros64()*1000,
         Str_LW06    : rangefinder.voltage_mv()*0.001f,
 		Str_LW05    : rangefinder.voltage_mv()*0.001f,
 		Str_LW04    : rangefinder.voltage_mv()*0.001f,
@@ -545,8 +547,8 @@ static const struct LogStructure log_structure[] = {
 	  //TAT", "QBfBBBBBB",  "PuS,MuS,L6,L5,L4,L3,L2,L1,R1,R2,R3,R4,R5,R6,TL,TR"
 	// Add log_Strain_Data to log_structure
     { LOG_STRAIN_DATA_MSG, sizeof(log_Strain_Data),             
-	  "STRAIN", "QHHffffffffffffff",  "PxuS,McuS,L6,L5,L4,L3,L2,L1,R1,R2,R3,R4,R5,R6,TL,TR" },
-	//"STRAIN", "QHHffffffffffffff",  "PX4TuS,PIC32TuS,STLW6,STLW5,STLW4,STLW3,STLW2,STLW1,STRW1,STRW2,STRW3,STRW4,STRW5,STRW6,TPLW6,TPRW6" },
+	  "STRAIN", "QIIffffffffffffff",  "PxmS,McmS,L6,L5,L4,L3,L2,L1,R1,R2,R3,R4,R5,R6,TL,TR" },
+	//"STRAIN", "QHHffffffffffffff",  "PX4TmS,PIC32TmS,STLW6,STLW5,STLW4,STLW3,STLW2,STLW1,STRW1,STRW2,STRW3,STRW4,STRW5,STRW6,TPLW6,TPRW6" },
 #if OPTFLOW == ENABLED
     { LOG_OPTFLOW_MSG, sizeof(log_Optflow),
       "OF",   "QBffff",   "TimeUS,Qual,flowX,flowY,bodyX,bodyY" },
