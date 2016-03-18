@@ -131,7 +131,7 @@ int8_t Plane::select_logs(uint8_t argc, const Menu::arg *argv)
         TARG(RC);
         TARG(SONAR);
         // Custom code
-        TARG(STRAIN_DATA);
+        TARG(LOG_STRAINDATA_01_MSG);
  #undef TARG
     }
 
@@ -374,51 +374,78 @@ void Plane::Log_Write_Sonar()
 #endif
 }
 
-struct PACKED log_Strain_Data {
+struct PACKED log_StrainData1 {
     LOG_PACKET_HEADER;
     uint32_t PX4t_ms;
 	uint32_t PIC32t_ms;
-    float Str_LW06;
     float Str_LW05;
-    float Str_LW04;
 	float Str_LW03;
-    float Str_LW02;
 	float Str_LW01;
     float Str_RW01;
-	float Str_RW02;
 	float Str_RW03;
-	float Str_RW04;
 	float Str_RW05;
-	float Str_RW06;
 	float Tmp_LW06;
 	float Tmp_RW06;
 };
 
 // Write a Strain data packet
-void Plane::Log_Write_Strain_Data()
+void Plane::Log_Write_Strain_Data_01()
 {
-    struct log_Strain_Data pkt = {
-        LOG_PACKET_HEADER_INIT(LOG_STRAIN_DATA_MSG),
-        PX4t_ms     : (uint32_t) AP_HAL::micros64()*1000,
-        PIC32t_ms   : plane.Strain_data.PIC32time_msec,
-        Str_LW06    : plane.Strain_data.Str_LW06,
-		Str_LW05    : plane.Strain_data.Str_LW05,
-		Str_LW04    : plane.Strain_data.Str_LW04,
-		Str_LW03    : plane.Strain_data.Str_LW03,
-		Str_LW02    : plane.Strain_data.Str_LW02,
-		Str_LW01    : plane.Strain_data.Str_LW01,
-		Str_RW01    : plane.Strain_data.Str_RW01,
-		Str_RW02    : plane.Strain_data.Str_RW02,
-		Str_RW03    : plane.Strain_data.Str_RW03,
-		Str_RW04    : plane.Strain_data.Str_RW04,
-		Str_RW05    : plane.Strain_data.Str_RW05,
-		Str_RW06    : plane.Strain_data.Str_RW06,
-		Tmp_LW06    : plane.Strain_data.Tmp_LW06,
-		Tmp_RW06    : plane.Strain_data.Tmp_RW06,
-    };
-    DataFlash.WriteBlock(&pkt, sizeof(pkt));
 
-    //DataFlash.Log_Write_RFND(rangefinder);
+    float Var1, Var2;
+    Var1 = 10.5;
+    Var2 = 18.5;
+    uint32_t Var3 = 0;
+
+    struct log_StrainData1 pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_STRAINDATA_01_MSG),
+            PX4t_ms         : (uint32_t) AP_HAL::micros64()*1000,
+            PIC32t_ms       : Strain_data_01.PIC32time_msec,
+            Str_LW05        : Var1,
+            Str_LW03        : Var1,
+            Str_LW01        : Var1,
+            Str_RW01        : Var2,
+            Str_RW03        : Var2,
+            Str_RW05        : Var2,
+            Tmp_LW06        : Var2,
+            Tmp_RW06        : Var2
+        };
+    DataFlash.WriteBlock(&pkt, sizeof(pkt));
+}
+
+struct PACKED log_StrainData2 {
+    LOG_PACKET_HEADER;
+    uint32_t PX4t_ms;
+    uint32_t PIC32t_ms;
+    float Str_LW06;
+    float Str_LW04;
+    float Str_LW02;
+    float Str_RW02;
+    float Str_RW04;
+    float Str_RW06;
+};
+
+// Write a Strain data packet
+void Plane::Log_Write_Strain_Data_02()
+{
+
+    float Var1, Var2;
+    Var1 = 10.5;
+    Var2 = 18.5;
+    uint32_t Var3 = 0;
+
+    struct log_StrainData2 pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_STRAINDATA_02_MSG),
+            PX4t_ms         : (uint32_t) AP_HAL::micros64()*1000,
+            PIC32t_ms       : Var3,
+            Str_LW06        : Var1,
+            Str_LW04        : Var1,
+            Str_LW02        : Var1,
+            Str_RW02        : Var2,
+            Str_RW04        : Var2,
+            Str_RW06        : Var2
+        };
+    DataFlash.WriteBlock(&pkt, sizeof(pkt));
 }
 
 struct PACKED log_Optflow {
@@ -546,9 +573,10 @@ static const struct LogStructure log_structure[] = {
       "STAT", "QBfBBBBBB",  "TimeUS,isFlying,isFlyProb,Armed,Safety,Crash,Still,Stage,Hit" },
 	  //TAT", "QBfBBBBBB",  "PuS,MuS,L6,L5,L4,L3,L2,L1,R1,R2,R3,R4,R5,R6,TL,TR"
 	// Add log_Strain_Data to log_structure
-    { LOG_STRAIN_DATA_MSG, sizeof(log_Strain_Data),             
-	  "STRAIN", "QIIffffffffffffff",  "PxmS,McmS,L6,L5,L4,L3,L2,L1,R1,R2,R3,R4,R5,R6,TL,TR" },
-	//"STRAIN", "QHHffffffffffffff",  "PX4TmS,PIC32TmS,STLW6,STLW5,STLW4,STLW3,STLW2,STLW1,STRW1,STRW2,STRW3,STRW4,STRW5,STRW6,TPLW6,TPRW6" },
+    { LOG_STRAINDATA_01_MSG, sizeof(log_StrainData1),
+	  "STN1", "QIIffffffff",  "PxmS,McmS,L5,L3,L1,R1,R3,R5,TL,TR" },
+	{ LOG_STRAINDATA_02_MSG, sizeof(log_StrainData2),
+	  "STN2", "QIIffffff",  "PxmS,McmS,L6,L4,L2,R2,R4,R6" },
 #if OPTFLOW == ENABLED
     { LOG_OPTFLOW_MSG, sizeof(log_Optflow),
       "OF",   "QBffff",   "TimeUS,Qual,flowX,flowY,bodyX,bodyY" },
@@ -630,6 +658,9 @@ void Plane::Log_Write_TECS_Tuning(void) {}
 void Plane::Log_Write_Nav_Tuning() {}
 void Plane::Log_Write_Status() {}
 void Plane::Log_Write_Sonar() {}
+// Custom functions
+void Plane::Log_Write_Strain_Data_01() {}
+void Plane::Log_Write_Strain_Data_02() {}
 
  #if OPTFLOW == ENABLED
 void Plane::Log_Write_Optflow() {}

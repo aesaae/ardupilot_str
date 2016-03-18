@@ -124,6 +124,27 @@ public:
                                const AP_Mission::Mission_Command &cmd);
     void Log_Write_Origin(uint8_t origin_type, const Location &loc);
     void Log_Write_RPM(const AP_RPM &rpm_sensor);
+    // Custom code
+    // Write Strain data packet definition
+    struct Strain_sensdata {
+        uint32_t PX4t_ms;
+        uint32_t PIC32t_ms;
+        float Str_LW06;
+        float Str_LW05;
+        float Str_LW04;
+        float Str_LW03;
+        float Str_LW02;
+        float Str_LW01;
+        float Str_RW01;
+        float Str_RW02;
+        float Str_RW03;
+        float Str_RW04;
+        float Str_RW05;
+        float Str_RW06;
+        float Tmp_LW06;
+        float Tmp_RW06;
+    };
+    void Log_Write_Strain_Data(Strain_sensdata &Strain_data);
 
     // This structure provides information on the internal member data of a PID for logging purposes
     struct PID_Info {

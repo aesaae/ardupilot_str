@@ -17,10 +17,10 @@
 struct LogStructure {
     uint8_t msg_type;
     uint8_t msg_len;
-    //const char name[5]; // <- Original value
-	const char name[10];
-    //const char format[16]; // <- Original value
-	const char format[24];
+    const char name[5]; // <- Original value
+	//const char name[10];
+    const char format[16]; // <- Original value
+	//const char format[24];
     const char labels[64];
 };
 

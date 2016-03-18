@@ -1561,27 +1561,33 @@
             <field name="rpm2" type="float">RPM Sensor2</field>
         </message>
 		
-		<message id="231" name="STRAIN_SENSDATA">
+		<message id="231" name="STRAIN_SENSDATA_01">
             <description>Strain sensors output</description>
 			<field name="PX4time_msec" type="uint32_t"> Pixhawk timestamp (milliseconds since boot)</field>
 			<field name="PIC32time_msec" type="uint32_t"> PIC32 timestamp (milliseconds), </field>
-            <field name="Str_LW06" type="float">Strain Sensor6 Left Wing</field>
 			<field name="Str_LW05" type="float">Strain Sensor5 Left Wing</field>
-			<field name="Str_LW04" type="float">Strain Sensor4 Left Wing</field>
 			<field name="Str_LW03" type="float">Strain Sensor3 Left Wing</field>
-			<field name="Str_LW02" type="float">Strain Sensor2 Left Wing</field>
 			<field name="Str_LW01" type="float">Strain Sensor1 Right Wing</field>
             <field name="Str_RW01" type="float">Strain Sensor1 Right Wing</field>
-			<field name="Str_RW02" type="float">Strain Sensor2 Right Wing</field>
 			<field name="Str_RW03" type="float">Strain Sensor3 Right Wing</field>
-			<field name="Str_RW04" type="float">Strain Sensor4 Right Wing</field>
 			<field name="Str_RW05" type="float">Strain Sensor5 Right Wing</field>
-			<field name="Str_RW06" type="float">Strain Sensor6 Right Wing</field>
 			<field name="Tmp_LW06" type="float">Temp Sensor6 Left Wing</field>
 			<field name="Tmp_RW06" type="float">Temp Sensor6 Right Wing</field>
         </message>
 		
-		<message id="232" name="PRESSURE_SENSDATA">
+		<message id="232" name="STRAIN_SENSDATA_02">
+            <description>Strain sensors output</description>
+			<field name="PX4time_msec" type="uint32_t"> Pixhawk timestamp (milliseconds since boot)</field>
+			<field name="PIC32time_msec" type="uint32_t"> PIC32 timestamp (milliseconds), </field>
+            <field name="Str_LW06" type="float">Strain Sensor6 Left Wing</field>
+			<field name="Str_LW04" type="float">Strain Sensor4 Left Wing</field>
+			<field name="Str_LW02" type="float">Strain Sensor2 Left Wing</field>
+			<field name="Str_RW02" type="float">Strain Sensor2 Right Wing</field>
+			<field name="Str_RW04" type="float">Strain Sensor4 Right Wing</field>
+			<field name="Str_RW06" type="float">Strain Sensor6 Right Wing</field>
+        </message>
+		
+		<message id="233" name="PRESSURE_SENSDATA">
             <description>Strain sensors output</description>
 			<field name="PX4time_msec" type="uint64_t"> Pixhawk timestamp (microseconds since boot)</field>
 			<field name="PIC32time_msec" type="uint64_t"> PIC32 timestamp (microseconds), </field>

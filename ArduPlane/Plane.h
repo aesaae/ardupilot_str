@@ -730,7 +730,8 @@ private:
 #endif // CONFIG_HAL_BOARD
     
     // Custom global variables definition
-    mavlink_strain_sensdata_t Strain_data;
+    mavlink_strain_sensdata_01_t Strain_data_01;
+    mavlink_strain_sensdata_02_t Strain_data_02;
 
     void demo_servos(uint8_t i);
     void adjust_nav_pitch_throttle(void);
@@ -783,7 +784,8 @@ private:
     void Log_Read(uint16_t log_num, int16_t start_page, int16_t end_page);
     void start_logging();
 	// Custom functions
-	void Log_Write_Strain_Data();
+	void Log_Write_Strain_Data_01();
+	void Log_Write_Strain_Data_02();
 
     void load_parameters(void);
     void adjust_altitude_target();

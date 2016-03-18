@@ -271,6 +271,9 @@ void Plane::update_logging1(void)
  */
 void Plane::update_logging2(void)
 {
+
+    Log_Write_Strain_Data_01();
+
     if (should_log(MASK_LOG_CTUN))
         Log_Write_Control_Tuning();
     

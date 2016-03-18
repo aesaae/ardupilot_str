@@ -1135,33 +1135,44 @@ void GCS_MAVLINK::handleMessage(mavlink_message_t* msg)
 {
     switch (msg->msgid) {
 
-	case MAVLINK_MSG_ID_STRAIN_SENSDATA:
+	case MAVLINK_MSG_ID_STRAIN_SENSDATA_01:
     {
     	// Declare mavlink_strain_sensdata_t packet
-    	mavlink_strain_sensdata_t packet;
+        mavlink_strain_sensdata_01_t packet;
     	// Decode strain sensors data into packet
-    	// void mavlink_msg_strain_sensdata_decode(const mavlink_message_t* msg, mavlink_strain_sensdata_t* strain_sensdata)
-    	mavlink_msg_strain_sensdata_decode(msg, &packet);
+    	// void mavlink_msg_strain_sensdata_01_decode(const mavlink_message_t* msg, mavlink_strain_sensdata_t* strain_sensdata)
+        mavlink_msg_strain_sensdata_01_decode(msg, &packet);
     	// Store data contained in packet in strain_data
-    	memcpy(&plane.Strain_data, &packet, sizeof(packet));
-    	/*
-        plane.Strain_data.PX4time_msec   = (uint32_t) AP_HAL::micros64()*1000;
-        plane.Strain_data.PIC32time_msec = packet.PIC32time_msec;
-        plane.Strain_data.Str_LW06  = packet.Str_LW06;
-        plane.Strain_data.Str_LW05;
-        plane.Strain_data.Str_LW04;
-        plane.Strain_data.Str_LW03;
-        plane.Strain_data.Str_LW02;
-        plane.Strain_data.Str_LW01;
-        */
+    	memcpy(&plane.Strain_data_01, &packet, sizeof(packet));
+    	//
         send_text(MAV_SEVERITY_INFO,"Strain gauge data received:");
         char message[20];
-        sprintf(message,"Sx = %.2f", 123.2);
+        sprintf(message,"PIC32 time stamp = %i", plane.Strain_data_01.PIC32time_msec);
         send_text(MAV_SEVERITY_INFO,message);
-        plane.Log_Write_Strain_Data();
+        // Log data
+        plane.Log_Write_Strain_Data_01();
         break;
     }
 	
+	case MAVLINK_MSG_ID_STRAIN_SENSDATA_02:
+    {
+        // Declare mavlink_strain_sensdata_t packet
+        mavlink_strain_sensdata_02_t packet;
+        // Decode strain sensors data into packet
+        // void mavlink_msg_strain_sensdata_02_decode(const mavlink_message_t* msg, mavlink_strain_sensdata_t* strain_sensdata)
+        mavlink_msg_strain_sensdata_02_decode(msg, &packet);
+        // Store data contained in packet in strain_data
+        memcpy(&plane.Strain_data_02, &packet, sizeof(packet));
+        //
+        send_text(MAV_SEVERITY_INFO,"Strain gauge data received:");
+        char message[20];
+        sprintf(message,"PIC32 time stamp = %i", plane.Strain_data_02.PIC32time_msec);
+        send_text(MAV_SEVERITY_INFO,message);
+        // Log data
+        plane.Log_Write_Strain_Data_02();
+        break;
+    }
+
     case MAVLINK_MSG_ID_REQUEST_DATA_STREAM:
     {
         handle_request_data_stream(msg, true);
