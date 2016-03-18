@@ -76,6 +76,7 @@ public:
         k_motor6                = 38,
         k_motor7                = 39,
         k_motor8                = 40,
+        k_strain_balancing      = 41,            ///< strain balancing device
         k_nr_aux_servo_functions         ///< This must be the last enum value (only add new values _before_ this one)
     } Aux_servo_function_t;
 

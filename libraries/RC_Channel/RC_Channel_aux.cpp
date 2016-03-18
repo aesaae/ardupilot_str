@@ -109,6 +109,7 @@ void RC_Channel_aux::aux_servo_function_setup(void)
     case RC_Channel_aux::k_steering:
     case RC_Channel_aux::k_flaperon1:
     case RC_Channel_aux::k_flaperon2:
+    case RC_Channel_aux::k_strain_balancing:
         set_angle_out(4500);
         break;
     default:

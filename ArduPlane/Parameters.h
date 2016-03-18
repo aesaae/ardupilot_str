@@ -284,6 +284,9 @@ public:
         k_param_quadplane,
         k_param_rtl_radius,
         k_param_land_then_servos_neutral,
+        // Gains for roll moment balancing
+        k_param_rollmoment_bal_p_gain,
+        k_param_rollmoment_bal_d_gain,
 
         //
         // 210: flight modes
@@ -370,6 +373,10 @@ public:
 
     // speed used for speed scaling
     AP_Float scaling_speed;
+
+    // Gains for roll moment balancing
+    AP_Float rollmoment_bal_p_gain;
+    AP_Float rollmoment_bal_d_gain;
 
     // navigation controller type. See AP_Navigation::ControllerType
     AP_Int8  nav_controller;

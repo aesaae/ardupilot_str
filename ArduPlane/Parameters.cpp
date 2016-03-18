@@ -866,6 +866,20 @@ const AP_Param::Info Plane::var_info[] = {
     // @User: Advanced
     GSCALAR(scaling_speed,        "SCALING_SPEED",    SCALING_SPEED),
 
+    // @Param: RollMntBal_PGain
+    // @DisplayName:
+    // @Description: Roll moment balancing proportional gain.
+    // @Units:
+    // @User: Advanced
+    GSCALAR(rollmoment_bal_p_gain,        "ROLLMNTBAL_PGAIN",    0),
+
+    // @Param: RollMntBal_DGain
+    // @DisplayName:
+    // @Description: Roll moment balancing derivative gain.
+    // @Units:
+    // @User: Advanced
+    GSCALAR(rollmoment_bal_d_gain,        "ROLLMNTBAL_DGAIN",    0),
+
     // @Param: MIN_GNDSPD_CM
     // @DisplayName: Minimum ground speed
     // @Description: Minimum ground speed in cm/s when under airspeed control

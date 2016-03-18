@@ -1084,6 +1084,9 @@ void Plane::set_servos(void)
     }
 #endif
 
+    // Update roll moment balancing using strain sensing
+    roll_moment_balancing_update();
+
     if (g.land_then_servos_neutral &&
             g.land_disarm_delay > 0 &&
             auto_state.land_complete &&
@@ -1258,3 +1261,23 @@ void Plane::update_load_factor(void)
         roll_limit_cd = constrain_int32(roll_limit_cd, -roll_limit, roll_limit);
     }    
 }
+
+
+void Plane::roll_moment_balancing_update(void)
+    {
+        int16_t servo_command;
+        float Str_error;
+        // Check that function has been assigned
+        if (!RC_Channel_aux::function_assigned(RC_Channel_aux::k_strain_balancing))
+        {
+            return;
+        }
+
+        // Compute strain error
+        Str_error = plane.Strain_data_01.Str_LW01 -plane.Strain_data_01.Str_RW01;
+
+        servo_command = g.k_param_rollmoment_bal_p_gain*Str_error;
+
+        // Apply command to servo
+        RC_Channel_aux::set_servo_out(RC_Channel_aux::k_strain_balancing , servo_command);
+    }

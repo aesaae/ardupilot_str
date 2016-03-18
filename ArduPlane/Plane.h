@@ -786,6 +786,7 @@ private:
 	// Custom functions
 	void Log_Write_Strain_Data_01();
 	void Log_Write_Strain_Data_02();
+	void roll_moment_balancing_update(void);
 
     void load_parameters(void);
     void adjust_altitude_target();

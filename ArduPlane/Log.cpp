@@ -131,7 +131,7 @@ int8_t Plane::select_logs(uint8_t argc, const Menu::arg *argv)
         TARG(RC);
         TARG(SONAR);
         // Custom code
-        TARG(LOG_STRAINDATA_01_MSG);
+        //TARG(LOG_STRAINDATA_01_MSG);
  #undef TARG
     }
 
